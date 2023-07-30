@@ -35,17 +35,17 @@
          </font>
       </Label>
       <Separator layoutX="339.0" layoutY="103.0" prefHeight="0.0" prefWidth="832.0" />
-      <JFXTextField layoutX="34.0" layoutY="158.0" onAction="#txtId" prefHeight="35.0" prefWidth="149.0" promptText="Customer Id" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <JFXTextField layoutX="244.0" layoutY="158.0" onAction="#txtName" prefHeight="35.0" prefWidth="328.0" promptText="Customer Name" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <JFXTextField layoutX="624.0" layoutY="160.0" onAction="#txtAddress" prefHeight="28.0" prefWidth="328.0" promptText="Customer Address" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <JFXTextField layoutX="994.0" layoutY="160.0" onAction="#txtSalary" promptText="Salary" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <TextField layoutX="33.0" layoutY="230.0" onAction="#txtSearchHere" prefHeight="35.0" prefWidth="922.0" promptText="Search Here" />
-      <JFXButton buttonType="RAISED" layoutX="985.0" layoutY="226.0" onAction="#saveCustomerOnAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #dcdde1;" text="Save Customer">
+      <JFXTextField fx:id="txtId" layoutX="34.0" layoutY="158.0" prefHeight="35.0" prefWidth="149.0" promptText="Customer Id" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtName" layoutX="244.0" layoutY="158.0" prefHeight="35.0" prefWidth="328.0" promptText="Customer Name" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtAddress" layoutX="624.0" layoutY="160.0" prefHeight="28.0" prefWidth="328.0" promptText="Customer Address" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtSalary" layoutX="994.0" layoutY="160.0" promptText="Salary" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <TextField fx:id="txtSearch" layoutX="33.0" layoutY="230.0" prefHeight="35.0" prefWidth="922.0" promptText="Search Here" />
+      <JFXButton fx:id="saveCustomerbtn" buttonType="RAISED" layoutX="968.0" layoutY="228.0" onAction="#saveCustomerOnAction" prefHeight="42.0" prefWidth="201.0" style="-fx-background-color: #dcdde1;" text="Save Customer">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
       <TableView fx:id="tblCustomer" layoutX="32.0" layoutY="294.0" prefHeight="389.0" prefWidth="1139.0">

@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.thogakade.controller.orderController">
    <children>
-      <AnchorPane fx:id="customerContext" prefHeight="710.0" prefWidth="1210.0" style="-fx-background-color: #badc58;">
+      <AnchorPane fx:id="orderContext" prefHeight="710.0" prefWidth="1210.0" style="-fx-background-color: #badc58;">
          <children>
             <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="15.0" onAction="#backToHomeonAction" prefHeight="35.0" prefWidth="208.0" style="-fx-background-color: #f0932b;" text="&lt;--Back To Home">
                <font>
