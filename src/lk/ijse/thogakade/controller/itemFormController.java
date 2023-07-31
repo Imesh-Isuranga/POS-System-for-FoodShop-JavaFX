@@ -40,7 +40,7 @@ public class itemFormController {
     public void initialize(){
 
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("decription"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colQTYOnHand.setCellValueFactory(new PropertyValueFactory<>("QTYOnHand"));
         colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
