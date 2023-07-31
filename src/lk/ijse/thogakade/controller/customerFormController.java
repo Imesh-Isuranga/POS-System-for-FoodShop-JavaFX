@@ -53,7 +53,6 @@ public class customerFormController {
                 setData((customerTM) newValue);
             }
         });
-
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             loadAllCustomers(newValue);
         });

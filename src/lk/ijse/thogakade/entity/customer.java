@@ -1,6 +1,13 @@
 package lk.ijse.thogakade.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Customer")
 public class customer extends SuperEntity{
+    @Id
     private String id;
     private String name;
     private String address;
