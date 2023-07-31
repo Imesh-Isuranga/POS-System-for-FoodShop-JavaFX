@@ -65,15 +65,6 @@ public class itemFormController {
 
     private void loadAllItems(String text) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-            PreparedStatement stm = connection.prepareStatement("SELECT * FROM Item WHERE code LIKE ? OR description LIKE ? OR unitPrice LIKE ? OR QTYOnHand LIKE ?");
-            stm.setObject(1,"%"+text+"%");
-            stm.setObject(2,"%"+text+"%");
-            stm.setObject(3,"%"+text+"%");
-            stm.setObject(4,"%"+text+"%");
-            ResultSet rst = stm.executeQuery();
-
             ObservableList<itemTM> itemTMList = FXCollections.observableArrayList();
 
             for (itemDTO itemDTO:new DataBaseAccessCode().getAllItem("%"+text+"%")
