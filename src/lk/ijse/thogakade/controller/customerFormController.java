@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.thogakade.DataBaseAccessCode;
+import lk.ijse.thogakade.dto.customerDTO;
 import lk.ijse.thogakade.view.TM.customerTM;
 
 import java.io.IOException;
@@ -65,23 +67,16 @@ public class customerFormController {
 
     private void loadAllCustomers(String searchText) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-            PreparedStatement stm = connection.prepareStatement("SELECT * FROM Customer WHERE id LIKE ? OR name LIKE ? OR address LIKE ?");
-            stm.setObject(1,"%"+searchText+"%");
-            stm.setObject(2,"%"+searchText+"%");
-            stm.setObject(3,"%"+searchText+"%");
-            ResultSet rst = stm.executeQuery();
-
             ObservableList<customerTM> customerObList = FXCollections.observableArrayList();
-            while(rst.next()){
+            for (customerDTO customerDTO:new DataBaseAccessCode().getAllCustomer("%"+searchText+"%")
+                 ) {
                 Button btn = new Button("Delete");
                 customerTM customerTM = new customerTM(
-                                rst.getString("id"),
-                                rst.getString("name"),
-                                rst.getString("address"),
-                                Double.parseDouble(rst.getString("salary")),
-                                btn
+                        customerDTO.getId(),
+                        customerDTO.getName(),
+                        customerDTO.getAddress(),
+                        customerDTO.getSalary(),
+                        btn
                 );
 
                 customerObList.add(customerTM);
@@ -91,12 +86,7 @@ public class customerFormController {
                         Alert comfirmation = new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure?",ButtonType.YES,ButtonType.CANCEL);
                         Optional<ButtonType> result = comfirmation.showAndWait();
                         if(result.get().equals(ButtonType.YES)){
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection connection1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-                            PreparedStatement stm1 = connection1.prepareStatement("DELETE FROM Customer WHERE id = ?");
-                            stm1.setObject(1,customerTM.getId());
-                            boolean isDeleted = stm1.executeUpdate() > 0;
-                            if(isDeleted){
+                            if(new DataBaseAccessCode().deleteCustomer(customerTM.getId())){
                                 Alert comAlert1 = new Alert(Alert.AlertType.CONFIRMATION,"Customer Deleted",ButtonType.OK);
                                 comAlert1.show();
                                 loadAllCustomers("");
@@ -135,15 +125,7 @@ public class customerFormController {
 
     public void saveCustomerOnAction(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         if(saveCustomerbtn.getText().equalsIgnoreCase("Save Customer")) {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-            PreparedStatement stm = connection.prepareStatement("INSERT INTO Customer values(?,?,?,?)");
-            stm.setObject(1, txtId.getText());
-            stm.setObject(2, txtName.getText());
-            stm.setObject(3, txtAddress.getText());
-            stm.setObject(4, txtSalary.getText());
-            boolean isSaved = stm.executeUpdate() > 0;
-            if (isSaved) {
+            if (new DataBaseAccessCode().saveCustomer(new customerDTO(txtId.getText(),txtName.getText(),txtAddress.getText(),Double.parseDouble(txtSalary.getText())))) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Saved", ButtonType.OK).show();
                 loadAllCustomers("");
             } else {
@@ -151,15 +133,7 @@ public class customerFormController {
                 comAlert.show();
             }
         }else{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-            PreparedStatement stm = connection.prepareStatement("UPDATE Customer SET name=?,address=?,salary=? WHERE id=?");
-            stm.setObject(4, txtId.getText());
-            stm.setObject(1, txtName.getText());
-            stm.setObject(2, txtAddress.getText());
-            stm.setObject(3, Double.parseDouble(txtSalary.getText()));
-            boolean isUpdated = stm.executeUpdate() > 0;
-            if (isUpdated) {
+            if (new DataBaseAccessCode().updateCustomer(new customerDTO(txtId.getText(),txtName.getText(),txtAddress.getText(),Double.parseDouble(txtSalary.getText())))) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Updated", ButtonType.OK).show();
                 loadAllCustomers("");
             } else {
