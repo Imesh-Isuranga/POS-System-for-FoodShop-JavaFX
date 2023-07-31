@@ -1,7 +1,5 @@
 package lk.ijse.thogakade.dao;
 
-import lk.ijse.thogakade.entity.item;
-
 
 import java.sql.SQLException;
 import java.util.ArrayList;
