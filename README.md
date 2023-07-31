@@ -25,6 +25,10 @@ Say goodbye to the hassles of raw SQL queries and database management. We've har
 ### Intuitive User Experience: 
 Our POS system offers an array of user-friendly features designed to streamline workflows. From customizable product catalogs to dynamic order processing and intuitive payment options, everything is crafted to reduce training time and maximize efficiency.
 
-## Installation
+## Screenshots
 
-Run the Serverside application and Clientside application separately.
+
+![App Screenshot](https://raw.githubusercontent.com/Imesh-Isuranga/POS-System-for-FoodShop-JavaFX/main/login.png)
+
+
+![App Screenshot](https://raw.githubusercontent.com/Imesh-Isuranga/POS-System-for-FoodShop-JavaFX/main/customerManagement.png)
