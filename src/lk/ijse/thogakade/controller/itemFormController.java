@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.thogakade.DataBaseAccessCode;
+import lk.ijse.thogakade.dto.itemDTO;
 import lk.ijse.thogakade.view.TM.itemTM;
 
 import java.io.IOException;
@@ -73,13 +75,15 @@ public class itemFormController {
             ResultSet rst = stm.executeQuery();
 
             ObservableList<itemTM> itemTMList = FXCollections.observableArrayList();
-            while(rst.next()){
+
+            for (itemDTO itemDTO:new DataBaseAccessCode().getAllItem("%"+text+"%")
+                 ) {
                 Button btn = new Button("Delete");
                 itemTM itemTM = new itemTM(
-                        rst.getString(1),
-                        rst.getString(2),
-                        rst.getDouble(3),
-                        rst.getInt(4),
+                        itemDTO.getCode(),
+                        itemDTO.getDescription(),
+                        itemDTO.getUnitPrice(),
+                        itemDTO.getQTYOnHand(),
                         btn
                 );
 
@@ -90,12 +94,7 @@ public class itemFormController {
                         Alert comAlert1 = new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure",ButtonType.YES,ButtonType.CANCEL);
                         Optional<ButtonType> result = comAlert1.showAndWait();
                         if(result.get().equals(ButtonType.YES)){
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection connection1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-                            PreparedStatement stm1 = connection1.prepareStatement("DELETE FROM Item WHERE code = ?");
-                            stm1.setObject(1,itemTM.getCode());
-                            boolean isDeleted = stm1.executeUpdate() > 0;
-                            if(isDeleted){
+                            if(new DataBaseAccessCode().deleteItem(itemTM.getCode())){
                                 Alert comAlert2 = new Alert(Alert.AlertType.CONFIRMATION,"Item Deleted",ButtonType.OK);
                                 comAlert2.show();
                                 loadAllItems("");
@@ -103,7 +102,7 @@ public class itemFormController {
                                 Alert comAlert3 = new Alert(Alert.AlertType.WARNING,"Something went wrong",ButtonType.CANCEL);
                                 comAlert3.show();
                             }
-                            }
+                        }
                     } catch (ClassNotFoundException | SQLException e) {
                         e.printStackTrace();
                     }
@@ -137,15 +136,7 @@ public class itemFormController {
     public void saveItemOnAction(ActionEvent actionEvent) {
         try {
             if(btnSaveItem.getText().equalsIgnoreCase("Save Item")){
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-                PreparedStatement stm = connection.prepareStatement("INSERT INTO Item VALUES(?,?,?,?)");
-                stm.setObject(1,txtCode.getText());
-                stm.setObject(2,txtDescription.getText());
-                stm.setObject(3,Double.parseDouble(txtUnitPrice.getText()));
-                stm.setObject(4,Integer.parseInt(txtQTYOnHand.getText()));
-                boolean isSaved = stm.executeUpdate() > 0;
-                if(isSaved){
+                if(new DataBaseAccessCode().saveItem(new itemDTO(txtCode.getText(),txtDescription.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.parseInt(txtQTYOnHand.getText())))){
                     Alert comAlert = new Alert(Alert.AlertType.CONFIRMATION,"Customer Saved", ButtonType.OK);
                     comAlert.show();
                     loadAllItems("");
@@ -154,15 +145,7 @@ public class itemFormController {
                     comAlert.show();
                 }
             }else{
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "imesh");
-                PreparedStatement stm = connection.prepareStatement("UPDATE Item SET description=?,unitPrice=?,QTYOnHand=? WHERE Code=?");
-                stm.setObject(4,txtCode.getText());
-                stm.setObject(1,txtDescription.getText());
-                stm.setObject(2,Double.parseDouble(txtUnitPrice.getText()));
-                stm.setObject(3,Integer.parseInt(txtQTYOnHand.getText()));
-                boolean isUpdated = stm.executeUpdate() > 0;
-                if(isUpdated){
+                if(new DataBaseAccessCode().updateItem(new itemDTO(txtCode.getText(),txtDescription.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.parseInt(txtQTYOnHand.getText())))){
                     Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION,"Customer Updated", ButtonType.OK);
                     alert1.show();
                     loadAllItems("");
