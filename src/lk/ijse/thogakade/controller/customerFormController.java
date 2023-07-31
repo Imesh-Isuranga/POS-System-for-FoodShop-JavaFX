@@ -120,7 +120,7 @@ public class customerFormController {
         txtId.clear();
         txtName.clear();
         txtAddress.clear();
-        txtSearch.clear();
+        txtSalary.clear();
     }
 
     public void saveCustomerOnAction(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {

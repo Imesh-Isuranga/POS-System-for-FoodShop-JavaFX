@@ -1,5 +1,6 @@
 package lk.ijse.thogakade.dao.impl;
 
+import lk.ijse.thogakade.dao.crudUtill;
 import lk.ijse.thogakade.dao.custom.customerDAO;
 import lk.ijse.thogakade.db.DBConnection;
 import lk.ijse.thogakade.dto.customerDTO;
@@ -13,36 +14,22 @@ import java.util.ArrayList;
 public class customerDAOImpl implements customerDAO {
     @Override
     public boolean saveCustomer(customer customer) throws SQLException, ClassNotFoundException {
-        PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO Customer values(?,?,?,?)");
-        stm.setObject(1,customer.getId());
-        stm.setObject(2,customer.getName());
-        stm.setObject(3,customer.getAddress());
-        stm.setObject(4,customer.getSalary());
-        return stm.executeUpdate() > 0;
+        return crudUtill.executeUpdate("INSERT INTO Customer values(?,?,?,?)",customer.getId(),customer.getName(),customer.getAddress(),customer.getSalary());
     }
 
     @Override
     public boolean updateCustomer(customer customer) throws SQLException, ClassNotFoundException {
-        PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("UPDATE Customer SET name=?,address=?,salary=? WHERE id=?");
-        stm.setObject(4,customer.getId());
-        stm.setObject(1,customer.getName());
-        stm.setObject(2,customer.getAddress());
-        stm.setObject(3,customer.getSalary());
-        return stm.executeUpdate() > 0;
+        return crudUtill.executeUpdate("UPDATE Customer SET name=?,address=?,salary=? WHERE id=?",customer.getName(),customer.getAddress(),customer.getSalary(),customer.getId());
     }
 
     @Override
     public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
-        PreparedStatement stm1 = DBConnection.getInstance().getConnection().prepareStatement("DELETE FROM Customer WHERE id = ?");
-        stm1.setObject(1,id);
-        return stm1.executeUpdate() > 0;
+        return crudUtill.executeUpdate("DELETE FROM Customer WHERE id = ?",id);
     }
 
     @Override
     public customer getCustomer(String id) throws SQLException, ClassNotFoundException {
-        PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM Customer WHERE id = ?");
-        stm.setObject(1,id);
-        ResultSet rst = stm.executeQuery();
+        ResultSet rst = crudUtill.executeQuery("SELECT * FROM Customer WHERE id = ?",id);
 
         if(rst.next()){
             return new customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getDouble(4));
@@ -52,11 +39,7 @@ public class customerDAOImpl implements customerDAO {
 
     @Override
     public ArrayList<customer> getAllCustomer(String text) throws SQLException, ClassNotFoundException {
-        PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement("SELECT * FROM Customer WHERE id LIKE ? OR name LIKE ? OR address LIKE ?");
-        stm.setObject(1,text);
-        stm.setObject(2,text);
-        stm.setObject(3,text);
-        ResultSet rst = stm.executeQuery();
+        ResultSet rst = crudUtill.executeQuery("SELECT * FROM Customer WHERE id LIKE ? OR name LIKE ? OR address LIKE ?",text,text,text);
 
         ArrayList<customer> customerEntityList = new ArrayList<>();
         while(rst.next()){
