@@ -11,7 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.thogakade.DataBaseAccessCode;
+import lk.ijse.thogakade.BO.Impl.itemBOImpl;
+import lk.ijse.thogakade.BO.custom.itemBO;
 import lk.ijse.thogakade.dto.itemDTO;
 import lk.ijse.thogakade.view.TM.itemTM;
 
@@ -33,6 +34,8 @@ public class itemFormController {
     public TableColumn colQTYOnHand;
     public TableColumn colOption;
     public JFXButton btnSaveItem;
+
+    itemBO bo = new itemBOImpl();
 
     public void initialize(){
 
@@ -67,7 +70,7 @@ public class itemFormController {
         try {
             ObservableList<itemTM> itemTMList = FXCollections.observableArrayList();
 
-            for (itemDTO itemDTO:new DataBaseAccessCode().getAllItem("%"+text+"%")
+            for (itemDTO itemDTO:bo.getAllItem("%"+text+"%")
                  ) {
                 Button btn = new Button("Delete");
                 itemTM itemTM = new itemTM(
@@ -85,7 +88,7 @@ public class itemFormController {
                         Alert comAlert1 = new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure",ButtonType.YES,ButtonType.CANCEL);
                         Optional<ButtonType> result = comAlert1.showAndWait();
                         if(result.get().equals(ButtonType.YES)){
-                            if(new DataBaseAccessCode().deleteItem(itemTM.getCode())){
+                            if(bo.deleteItem(itemTM.getCode())){
                                 Alert comAlert2 = new Alert(Alert.AlertType.CONFIRMATION,"Item Deleted",ButtonType.OK);
                                 comAlert2.show();
                                 loadAllItems("");
@@ -127,7 +130,7 @@ public class itemFormController {
     public void saveItemOnAction(ActionEvent actionEvent) {
         try {
             if(btnSaveItem.getText().equalsIgnoreCase("Save Item")){
-                if(new DataBaseAccessCode().saveItem(new itemDTO(txtCode.getText(),txtDescription.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.parseInt(txtQTYOnHand.getText())))){
+                if(bo.saveItem(new itemDTO(txtCode.getText(),txtDescription.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.parseInt(txtQTYOnHand.getText())))){
                     Alert comAlert = new Alert(Alert.AlertType.CONFIRMATION,"Customer Saved", ButtonType.OK);
                     comAlert.show();
                     loadAllItems("");
@@ -136,7 +139,7 @@ public class itemFormController {
                     comAlert.show();
                 }
             }else{
-                if(new DataBaseAccessCode().updateItem(new itemDTO(txtCode.getText(),txtDescription.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.parseInt(txtQTYOnHand.getText())))){
+                if(bo.updateItem(new itemDTO(txtCode.getText(),txtDescription.getText(),Double.parseDouble(txtUnitPrice.getText()),Integer.parseInt(txtQTYOnHand.getText())))){
                     Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION,"Customer Updated", ButtonType.OK);
                     alert1.show();
                     loadAllItems("");

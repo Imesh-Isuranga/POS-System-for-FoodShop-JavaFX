@@ -12,7 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.thogakade.DataBaseAccessCode;
+import lk.ijse.thogakade.BO.Impl.customerBOImpl;
+import lk.ijse.thogakade.BO.custom.customerBO;
 import lk.ijse.thogakade.dto.customerDTO;
 import lk.ijse.thogakade.view.TM.customerTM;
 
@@ -34,6 +35,8 @@ public class customerFormController {
     public JFXTextField txtSalary;
     public JFXButton saveCustomerbtn;
     public TextField txtSearch;
+
+    customerBO bo = new customerBOImpl();
 
     public void initialize(){
 
@@ -68,7 +71,7 @@ public class customerFormController {
     private void loadAllCustomers(String searchText) {
         try {
             ObservableList<customerTM> customerObList = FXCollections.observableArrayList();
-            for (customerDTO customerDTO:new DataBaseAccessCode().getAllCustomer("%"+searchText+"%")
+            for (customerDTO customerDTO:bo.getAllCustomer("%"+searchText+"%")
                  ) {
                 Button btn = new Button("Delete");
                 customerTM customerTM = new customerTM(
@@ -86,7 +89,7 @@ public class customerFormController {
                         Alert comfirmation = new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure?",ButtonType.YES,ButtonType.CANCEL);
                         Optional<ButtonType> result = comfirmation.showAndWait();
                         if(result.get().equals(ButtonType.YES)){
-                            if(new DataBaseAccessCode().deleteCustomer(customerTM.getId())){
+                            if(bo.deleteCustomer(customerTM.getId())){
                                 Alert comAlert1 = new Alert(Alert.AlertType.CONFIRMATION,"Customer Deleted",ButtonType.OK);
                                 comAlert1.show();
                                 loadAllCustomers("");
@@ -125,7 +128,7 @@ public class customerFormController {
 
     public void saveCustomerOnAction(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         if(saveCustomerbtn.getText().equalsIgnoreCase("Save Customer")) {
-            if (new DataBaseAccessCode().saveCustomer(new customerDTO(txtId.getText(),txtName.getText(),txtAddress.getText(),Double.parseDouble(txtSalary.getText())))) {
+            if (bo.saveCustomer(new customerDTO(txtId.getText(),txtName.getText(),txtAddress.getText(),Double.parseDouble(txtSalary.getText())))) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Saved", ButtonType.OK).show();
                 loadAllCustomers("");
             } else {
@@ -133,7 +136,7 @@ public class customerFormController {
                 comAlert.show();
             }
         }else{
-            if (new DataBaseAccessCode().updateCustomer(new customerDTO(txtId.getText(),txtName.getText(),txtAddress.getText(),Double.parseDouble(txtSalary.getText())))) {
+            if (bo.updateCustomer(new customerDTO(txtId.getText(),txtName.getText(),txtAddress.getText(),Double.parseDouble(txtSalary.getText())))) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Updated", ButtonType.OK).show();
                 loadAllCustomers("");
             } else {
