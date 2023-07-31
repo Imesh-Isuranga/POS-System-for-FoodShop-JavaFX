@@ -1,6 +1,6 @@
 package lk.ijse.thogakade.entity;
 
-public class item {
+public class item extends SuperEntity{
     private String code;
     private String description;
     private double unitPrice;

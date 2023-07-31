@@ -1,6 +1,6 @@
 package lk.ijse.thogakade.entity;
 
-public class customer {
+public class customer extends SuperEntity{
     private String id;
     private String name;
     private String address;
