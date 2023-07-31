@@ -35,12 +35,12 @@
          </font>
       </Label>
       <Separator layoutX="277.0" layoutY="113.0" prefHeight="4.0" prefWidth="904.0" />
-      <JFXTextField layoutX="29.0" layoutY="168.0" onAction="#txtCode" prefHeight="35.0" prefWidth="164.0" promptText="Item Code" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <JFXTextField layoutX="220.0" layoutY="168.0" onAction="#txtDescription" prefHeight="35.0" prefWidth="433.0" promptText="Item Description" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <JFXTextField layoutX="694.0" layoutY="170.0" onAction="#txtUnitPrice" prefHeight="31.0" prefWidth="302.0" promptText="Unit Price" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <JFXTextField layoutX="1033.0" layoutY="170.0" onAction="#txtQTYOnHand" prefHeight="31.0" prefWidth="140.0" promptText="QTY On Hand" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
-      <TextField layoutX="23.0" layoutY="240.0" onAction="#txtSearchHere" prefHeight="35.0" prefWidth="942.0" promptText="Search Here" />
-      <JFXButton buttonType="RAISED" layoutX="995.0" layoutY="236.0" onAction="#saveItemOnAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #dcdde1;" text="Save Item">
+      <JFXTextField fx:id="txtCode" layoutX="29.0" layoutY="168.0" prefHeight="35.0" prefWidth="164.0" promptText="Item Code" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtDescription" layoutX="220.0" layoutY="168.0" prefHeight="35.0" prefWidth="433.0" promptText="Item Description" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtUnitPrice" layoutX="694.0" layoutY="170.0" prefHeight="31.0" prefWidth="302.0" promptText="Unit Price" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtQTYOnHand" layoutX="1033.0" layoutY="170.0" prefHeight="31.0" prefWidth="140.0" promptText="QTY On Hand" style="-fx-background-color: #badc58;" unFocusColor="BLACK" />
+      <TextField fx:id="txtSearchHere" layoutX="23.0" layoutY="240.0" prefHeight="35.0" prefWidth="942.0" promptText="Search Here" />
+      <JFXButton fx:id="btnSaveItem" buttonType="RAISED" layoutX="995.0" layoutY="236.0" onAction="#saveItemOnAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #dcdde1;" text="Save Item">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -50,11 +50,11 @@
       </JFXButton>
       <TableView fx:id="tblItem" layoutX="22.0" layoutY="304.0" prefHeight="389.0" prefWidth="1159.0">
          <columns>
-            <TableColumn prefWidth="158.0" text="Item Code" />
-            <TableColumn prefWidth="277.0" text="Item Description" />
-            <TableColumn prefWidth="282.0" text="Unit price" />
-            <TableColumn prefWidth="220.0" text="QTY On Hand" />
-            <TableColumn prefWidth="186.0" text="Option" />
+            <TableColumn fx:id="colCode" prefWidth="158.0" text="Item Code" />
+            <TableColumn fx:id="colDescription" prefWidth="277.0" text="Item Description" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="282.0" text="Unit price" />
+            <TableColumn fx:id="colQTYOnHand" prefWidth="220.0" text="QTY On Hand" />
+            <TableColumn fx:id="colOption" prefWidth="221.0" text="Option" />
          </columns>
       </TableView>
    </children>

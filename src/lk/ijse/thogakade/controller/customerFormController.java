@@ -158,8 +158,8 @@ public class customerFormController {
             stm.setObject(1, txtName.getText());
             stm.setObject(2, txtAddress.getText());
             stm.setObject(3, Double.parseDouble(txtSalary.getText()));
-            boolean isSaved = stm.executeUpdate() > 0;
-            if (isSaved) {
+            boolean isUpdated = stm.executeUpdate() > 0;
+            if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Updated", ButtonType.OK).show();
                 loadAllCustomers("");
             } else {
